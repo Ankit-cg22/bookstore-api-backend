@@ -1,4 +1,3 @@
-
 const {BookModel} = require('../models/book')
 const mongoose = require('mongoose')
 
@@ -52,9 +51,9 @@ const deleteBook = async (req , res)=>{
 
     try {
         
-        await BookModel.findByIdAndRemove( id );
+        const deletedBook = await BookModel.findByIdAndRemove( id );
 
-        res.status(200).json({message : "Book deleted successfully"})
+        res.status(200).json({message : "Book deleted successfully" , data : deletedBook})
 
     } catch (error) {
         console.log(error.message)
@@ -70,7 +69,7 @@ const getBookByISBN = async(req , res) => {
 
         if(book.length === 0) return res.status(404).json({message : "No book with this ISBN"})
 
-        res.status(200).json({message : "Success" ,book : book[0]})
+        res.status(200).json({message : "Success" ,data : book[0]})
 
     } catch (error) {
         console.log(error.message)

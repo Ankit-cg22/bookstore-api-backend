@@ -2,11 +2,14 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const bookStoreRouter = require('./routes/bookStore')
 
 const app = express()
 app.use(express.urlencoded({extended :  true}))
 app.use(express.json())
 app.use(cors({origin:'*'}))
+
+app.use('/bookStore' , bookStoreRouter)
 
 app.get('/' , (req , res) => {
     res.send("Welcome to Bookstore API.")

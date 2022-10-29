@@ -16,11 +16,16 @@ const getAllBooks = async (req ,res) => {
 
 const addBook = async (req , res) =>{ 
     const book = req.body; 
-        
+    
     try {
+        const oldBooks = await BookModel.find({ISBN : book.ISBN})
+
+        if(oldBooks.length !== 0) return res.status(404).json({message : "ISBN already exists!"})
+
        const newBook = new BookModel(book)
        await newBook.save()
        res.status(201).json({message : "Book added successfully" , data : newBook}) 
+
     } catch (error) {
         console.log(error.message)
         res.status(500).json({message : error.message})
